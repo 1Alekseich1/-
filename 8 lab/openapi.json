@@ -1,0 +1,1364 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "BookNest API",
+    "description": "Каталог книг на PostgreSQL и SQLAlchemy",
+    "version": "2.0.0"
+  },
+  "paths": {
+    "/health": {
+      "get": {
+        "summary": "Health",
+        "operationId": "health_health_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": {
+                    "type": "string"
+                  },
+                  "type": "object",
+                  "title": "Response Health Health Get"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/books": {
+      "get": {
+        "tags": [
+          "Книги"
+        ],
+        "summary": "List Books",
+        "operationId": "list_books_api_v1_books_get",
+        "parameters": [
+          {
+            "name": "q",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "maxLength": 150
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Q"
+            }
+          },
+          {
+            "name": "genre",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "enum": [
+                    "Фантастика",
+                    "Классика",
+                    "Детектив",
+                    "Научная",
+                    "Приключения"
+                  ],
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Genre"
+            }
+          },
+          {
+            "name": "available_only",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "boolean",
+              "default": false,
+              "title": "Available Only"
+            }
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "enum": [
+                "title",
+                "-title",
+                "year",
+                "-year",
+                "rating",
+                "-rating"
+              ],
+              "type": "string",
+              "default": "title",
+              "title": "Sort"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 1,
+              "title": "Page"
+            }
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 20,
+              "title": "Size"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Page_BookRead_"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Книги"
+        ],
+        "summary": "Create Book",
+        "operationId": "create_book_api_v1_books_post",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BookCreate"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BookRead"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "ISBN занят"
+          },
+          "422": {
+            "description": "Ошибка валидации"
+          }
+        }
+      }
+    },
+    "/api/v1/books/{book_id}": {
+      "get": {
+        "tags": [
+          "Книги"
+        ],
+        "summary": "Get Book",
+        "operationId": "get_book_api_v1_books__book_id__get",
+        "parameters": [
+          {
+            "name": "book_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "title": "Book Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BookRead"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Не найдено"
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "Книги"
+        ],
+        "summary": "Patch Book",
+        "operationId": "patch_book_api_v1_books__book_id__patch",
+        "parameters": [
+          {
+            "name": "book_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "title": "Book Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BookUpdate"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BookRead"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Не найдено"
+          },
+          "409": {
+            "description": "Конфликт"
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Книги"
+        ],
+        "summary": "Delete Book",
+        "operationId": "delete_book_api_v1_books__book_id__delete",
+        "parameters": [
+          {
+            "name": "book_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "title": "Book Id"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Successful Response"
+          },
+          "404": {
+            "description": "Не найдено"
+          },
+          "409": {
+            "description": "Есть выдачи"
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/authors": {
+      "get": {
+        "tags": [
+          "Авторы"
+        ],
+        "summary": "List Authors",
+        "operationId": "list_authors_api_v1_authors_get",
+        "parameters": [
+          {
+            "name": "q",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "maxLength": 100
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Q"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 1,
+              "title": "Page"
+            }
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 20,
+              "title": "Size"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Page_AuthorRead_"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Авторы"
+        ],
+        "summary": "Create Author",
+        "operationId": "create_author_api_v1_authors_post",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AuthorCreate"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthorRead"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/authors/{author_id}": {
+      "get": {
+        "tags": [
+          "Авторы"
+        ],
+        "summary": "Get Author",
+        "operationId": "get_author_api_v1_authors__author_id__get",
+        "parameters": [
+          {
+            "name": "author_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "title": "Author Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthorRead"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Не найдено"
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "Авторы"
+        ],
+        "summary": "Patch Author",
+        "operationId": "patch_author_api_v1_authors__author_id__patch",
+        "parameters": [
+          {
+            "name": "author_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "title": "Author Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AuthorUpdate"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthorRead"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Не найдено"
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Авторы"
+        ],
+        "summary": "Delete Author",
+        "operationId": "delete_author_api_v1_authors__author_id__delete",
+        "parameters": [
+          {
+            "name": "author_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "title": "Author Id"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Successful Response"
+          },
+          "404": {
+            "description": "Не найдено"
+          },
+          "409": {
+            "description": "Есть книги"
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/authors/{author_id}/books": {
+      "get": {
+        "tags": [
+          "Авторы"
+        ],
+        "summary": "Author Books",
+        "operationId": "author_books_api_v1_authors__author_id__books_get",
+        "parameters": [
+          {
+            "name": "author_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "title": "Author Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/BookRead"
+                  },
+                  "title": "Response Author Books Api V1 Authors  Author Id  Books Get"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Не найдено"
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/loans": {
+      "post": {
+        "tags": [
+          "Выдачи"
+        ],
+        "summary": "Create Loan",
+        "operationId": "create_loan_api_v1_loans_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoanCreate"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LoanRead"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Нет книги/читателя"
+          },
+          "409": {
+            "description": "Нет свободных экземпляров"
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/loans/{loan_id}": {
+      "get": {
+        "tags": [
+          "Выдачи"
+        ],
+        "summary": "Get Loan",
+        "operationId": "get_loan_api_v1_loans__loan_id__get",
+        "parameters": [
+          {
+            "name": "loan_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "title": "Loan Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LoanRead"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Не найдено"
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "AuthorCreate": {
+        "properties": {
+          "name": {
+            "type": "string",
+            "maxLength": 100,
+            "minLength": 2,
+            "title": "Name",
+            "examples": [
+              "Михаил Булгаков"
+            ]
+          },
+          "country": {
+            "type": "string",
+            "maxLength": 80,
+            "minLength": 2,
+            "title": "Country",
+            "examples": [
+              "Россия"
+            ]
+          },
+          "birth_year": {
+            "type": "integer",
+            "maximum": 2026.0,
+            "minimum": 1000.0,
+            "title": "Birth Year",
+            "examples": [
+              1891
+            ]
+          }
+        },
+        "type": "object",
+        "required": [
+          "name",
+          "country",
+          "birth_year"
+        ],
+        "title": "AuthorCreate"
+      },
+      "AuthorRead": {
+        "properties": {
+          "name": {
+            "type": "string",
+            "maxLength": 100,
+            "minLength": 2,
+            "title": "Name",
+            "examples": [
+              "Михаил Булгаков"
+            ]
+          },
+          "country": {
+            "type": "string",
+            "maxLength": 80,
+            "minLength": 2,
+            "title": "Country",
+            "examples": [
+              "Россия"
+            ]
+          },
+          "birth_year": {
+            "type": "integer",
+            "maximum": 2026.0,
+            "minimum": 1000.0,
+            "title": "Birth Year",
+            "examples": [
+              1891
+            ]
+          },
+          "id": {
+            "type": "integer",
+            "title": "Id"
+          }
+        },
+        "type": "object",
+        "required": [
+          "name",
+          "country",
+          "birth_year",
+          "id"
+        ],
+        "title": "AuthorRead"
+      },
+      "AuthorUpdate": {
+        "properties": {
+          "name": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 100,
+                "minLength": 2
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Name"
+          },
+          "country": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 80,
+                "minLength": 2
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Country"
+          },
+          "birth_year": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "maximum": 2026.0,
+                "minimum": 1000.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Birth Year"
+          }
+        },
+        "type": "object",
+        "title": "AuthorUpdate"
+      },
+      "BookCreate": {
+        "properties": {
+          "title": {
+            "type": "string",
+            "maxLength": 150,
+            "minLength": 1,
+            "title": "Title",
+            "examples": [
+              "Мастер и Маргарита"
+            ]
+          },
+          "author_id": {
+            "type": "integer",
+            "minimum": 1.0,
+            "title": "Author Id",
+            "examples": [
+              1
+            ]
+          },
+          "isbn": {
+            "type": "string",
+            "pattern": "^\\d{13}$",
+            "title": "Isbn",
+            "examples": [
+              "9785170906307"
+            ]
+          },
+          "year": {
+            "type": "integer",
+            "maximum": 2026.0,
+            "minimum": 1450.0,
+            "title": "Year",
+            "examples": [
+              1967
+            ]
+          },
+          "genre": {
+            "type": "string",
+            "enum": [
+              "Фантастика",
+              "Классика",
+              "Детектив",
+              "Научная",
+              "Приключения"
+            ],
+            "title": "Genre",
+            "examples": [
+              "Классика"
+            ]
+          },
+          "rating": {
+            "type": "number",
+            "maximum": 5.0,
+            "minimum": 0.0,
+            "title": "Rating",
+            "examples": [
+              4.8
+            ]
+          },
+          "copies_total": {
+            "type": "integer",
+            "maximum": 10000.0,
+            "minimum": 0.0,
+            "title": "Copies Total",
+            "examples": [
+              4
+            ]
+          },
+          "copies_available": {
+            "type": "integer",
+            "maximum": 10000.0,
+            "minimum": 0.0,
+            "title": "Copies Available",
+            "examples": [
+              2
+            ]
+          },
+          "description": {
+            "type": "string",
+            "maxLength": 3000,
+            "title": "Description",
+            "default": ""
+          }
+        },
+        "type": "object",
+        "required": [
+          "title",
+          "author_id",
+          "isbn",
+          "year",
+          "genre",
+          "rating",
+          "copies_total",
+          "copies_available"
+        ],
+        "title": "BookCreate"
+      },
+      "BookRead": {
+        "properties": {
+          "title": {
+            "type": "string",
+            "maxLength": 150,
+            "minLength": 1,
+            "title": "Title",
+            "examples": [
+              "Мастер и Маргарита"
+            ]
+          },
+          "author_id": {
+            "type": "integer",
+            "minimum": 1.0,
+            "title": "Author Id",
+            "examples": [
+              1
+            ]
+          },
+          "isbn": {
+            "type": "string",
+            "pattern": "^\\d{13}$",
+            "title": "Isbn",
+            "examples": [
+              "9785170906307"
+            ]
+          },
+          "year": {
+            "type": "integer",
+            "maximum": 2026.0,
+            "minimum": 1450.0,
+            "title": "Year",
+            "examples": [
+              1967
+            ]
+          },
+          "genre": {
+            "type": "string",
+            "enum": [
+              "Фантастика",
+              "Классика",
+              "Детектив",
+              "Научная",
+              "Приключения"
+            ],
+            "title": "Genre",
+            "examples": [
+              "Классика"
+            ]
+          },
+          "rating": {
+            "type": "number",
+            "maximum": 5.0,
+            "minimum": 0.0,
+            "title": "Rating",
+            "examples": [
+              4.8
+            ]
+          },
+          "copies_total": {
+            "type": "integer",
+            "maximum": 10000.0,
+            "minimum": 0.0,
+            "title": "Copies Total",
+            "examples": [
+              4
+            ]
+          },
+          "copies_available": {
+            "type": "integer",
+            "maximum": 10000.0,
+            "minimum": 0.0,
+            "title": "Copies Available",
+            "examples": [
+              2
+            ]
+          },
+          "description": {
+            "type": "string",
+            "maxLength": 3000,
+            "title": "Description",
+            "default": ""
+          },
+          "id": {
+            "type": "integer",
+            "title": "Id"
+          },
+          "available": {
+            "type": "boolean",
+            "title": "Available"
+          }
+        },
+        "type": "object",
+        "required": [
+          "title",
+          "author_id",
+          "isbn",
+          "year",
+          "genre",
+          "rating",
+          "copies_total",
+          "copies_available",
+          "id",
+          "available"
+        ],
+        "title": "BookRead"
+      },
+      "BookUpdate": {
+        "properties": {
+          "title": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 150,
+                "minLength": 1
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Title"
+          },
+          "author_id": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "minimum": 1.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Author Id"
+          },
+          "isbn": {
+            "anyOf": [
+              {
+                "type": "string",
+                "pattern": "^\\d{13}$"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Isbn"
+          },
+          "year": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "maximum": 2026.0,
+                "minimum": 1450.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Year"
+          },
+          "genre": {
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "Фантастика",
+                  "Классика",
+                  "Детектив",
+                  "Научная",
+                  "Приключения"
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Genre"
+          },
+          "rating": {
+            "anyOf": [
+              {
+                "type": "number",
+                "maximum": 5.0,
+                "minimum": 0.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Rating"
+          },
+          "copies_total": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "maximum": 10000.0,
+                "minimum": 0.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Copies Total"
+          },
+          "copies_available": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "maximum": 10000.0,
+                "minimum": 0.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Copies Available"
+          },
+          "description": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 3000
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Description"
+          }
+        },
+        "type": "object",
+        "title": "BookUpdate"
+      },
+      "HTTPValidationError": {
+        "properties": {
+          "detail": {
+            "items": {
+              "$ref": "#/components/schemas/ValidationError"
+            },
+            "type": "array",
+            "title": "Detail"
+          }
+        },
+        "type": "object",
+        "title": "HTTPValidationError"
+      },
+      "LoanCreate": {
+        "properties": {
+          "user_id": {
+            "type": "integer",
+            "exclusiveMinimum": 0.0,
+            "title": "User Id"
+          },
+          "book_id": {
+            "type": "integer",
+            "exclusiveMinimum": 0.0,
+            "title": "Book Id"
+          },
+          "days": {
+            "type": "integer",
+            "maximum": 60.0,
+            "minimum": 1.0,
+            "title": "Days",
+            "default": 14
+          }
+        },
+        "type": "object",
+        "required": [
+          "user_id",
+          "book_id"
+        ],
+        "title": "LoanCreate"
+      },
+      "LoanRead": {
+        "properties": {
+          "id": {
+            "type": "integer",
+            "title": "Id"
+          },
+          "user_id": {
+            "type": "integer",
+            "title": "User Id"
+          },
+          "book_id": {
+            "type": "integer",
+            "title": "Book Id"
+          },
+          "loan_date": {
+            "type": "string",
+            "format": "date",
+            "title": "Loan Date"
+          },
+          "due_date": {
+            "type": "string",
+            "format": "date",
+            "title": "Due Date"
+          },
+          "return_date": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Return Date"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "user_id",
+          "book_id",
+          "loan_date",
+          "due_date",
+          "return_date"
+        ],
+        "title": "LoanRead"
+      },
+      "Page_AuthorRead_": {
+        "properties": {
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/AuthorRead"
+            },
+            "type": "array",
+            "title": "Items"
+          },
+          "total": {
+            "type": "integer",
+            "title": "Total"
+          },
+          "page": {
+            "type": "integer",
+            "title": "Page"
+          },
+          "size": {
+            "type": "integer",
+            "title": "Size"
+          }
+        },
+        "type": "object",
+        "required": [
+          "items",
+          "total",
+          "page",
+          "size"
+        ],
+        "title": "Page[AuthorRead]"
+      },
+      "Page_BookRead_": {
+        "properties": {
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/BookRead"
+            },
+            "type": "array",
+            "title": "Items"
+          },
+          "total": {
+            "type": "integer",
+            "title": "Total"
+          },
+          "page": {
+            "type": "integer",
+            "title": "Page"
+          },
+          "size": {
+            "type": "integer",
+            "title": "Size"
+          }
+        },
+        "type": "object",
+        "required": [
+          "items",
+          "total",
+          "page",
+          "size"
+        ],
+        "title": "Page[BookRead]"
+      },
+      "ValidationError": {
+        "properties": {
+          "loc": {
+            "items": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "integer"
+                }
+              ]
+            },
+            "type": "array",
+            "title": "Location"
+          },
+          "msg": {
+            "type": "string",
+            "title": "Message"
+          },
+          "type": {
+            "type": "string",
+            "title": "Error Type"
+          },
+          "input": {
+            "title": "Input"
+          },
+          "ctx": {
+            "type": "object",
+            "title": "Context"
+          }
+        },
+        "type": "object",
+        "required": [
+          "loc",
+          "msg",
+          "type"
+        ],
+        "title": "ValidationError"
+      }
+    }
+  }
+}
