@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="BookNest — книжный клуб университета: каталог, информация о книгах и заявки на выдачу.">
+  <title>Мастер и Маргарита — BookNest</title>
+</head>
+<body>
+  <a href="#main">Перейти к основному содержимому</a>
+  <header>
+    <p><strong>BookNest</strong> — книжный клуб университета</p>
+    <nav aria-label="Основная навигация">
+      <ul>
+        <li><a href="index.html">Каталог книг</a></li>
+        <li><a href="book.html">Карточка книги</a></li>
+        <li><a href="loan.html">Заявка на выдачу</a></li>
+      </ul>
+    </nav>
+  </header>
+  <main id="main">
+    <nav aria-label="Хлебные крошки">
+      <ol>
+        <li><a href="index.html">Каталог</a></li>
+        <li aria-current="page">Мастер и Маргарита</li>
+      </ol>
+    </nav>
+    <h1>Мастер и Маргарита</h1>
+    <article itemscope itemtype="https://schema.org/Book">
+      <h2>О книге</h2>
+      <figure>
+        <img src="images/master.svg" width="180" height="250" alt="Учебная обложка романа «Мастер и Маргарита»: круг и геометрический узор" itemprop="image">
+        <figcaption>Михаил Булгаков — «Мастер и Маргарита»</figcaption>
+      </figure>
+      <dl>
+        <dt>Автор</dt><dd itemprop="author">Михаил Булгаков</dd>
+        <dt>Название</dt><dd itemprop="name">Мастер и Маргарита</dd>
+        <dt>Жанр</dt><dd itemprop="genre">Роман</dd>
+        <dt>Год первой публикации</dt><dd><time datetime="1967" itemprop="datePublished">1967</time></dd>
+        <dt>Язык</dt><dd itemprop="inLanguage">Русский</dd>
+        <dt>Свободных экземпляров</dt><dd>3</dd>
+        <dt>Рейтинг клуба</dt><dd>4,9 из 5</dd>
+      </dl>
+      <section aria-labelledby="description-title">
+        <h3 id="description-title">Описание</h3>
+        <p itemprop="description">Роман о любви, свободе, творчестве и выборе. Истории московских героев переплетаются с событиями в древнем городе.</p>
+      </section>
+      <p><a href="loan.html">Оформить заявку на выдачу</a></p>
+    </article>
+    <section aria-labelledby="reviews-title">
+      <h2 id="reviews-title">Отзывы читателей</h2>
+      <article>
+        <h3>Алина — «Необычная история»</h3>
+        <p><time datetime="2026-09-15">15 сентября 2026 года</time></p>
+        <p>Понравилось, как соединены разные сюжетные линии. Хочется перечитать.</p>
+      </article>
+      <article>
+        <h3>Данияр — «Книга заставляет задуматься»</h3>
+        <p><time datetime="2026-10-01">1 октября 2026 года</time></p>
+        <p>Интересные герои и много тем для обсуждения на встрече клуба.</p>
+      </article>
+      <section aria-labelledby="review-form-title">
+        <h3 id="review-form-title">Оставить отзыв</h3>
+        <form action="book.html" method="get">
+          <p><label for="review-name">Ваше имя</label>
+            <input id="review-name" name="review_name" type="text" minlength="2" maxlength="50" required></p>
+          <p><label for="review-rating">Оценка</label>
+            <select id="review-rating" name="rating" required>
+              <option value="">Выберите оценку</option>
+              <option value="5">5 — отлично</option>
+              <option value="4">4 — хорошо</option>
+              <option value="3">3 — нормально</option>
+              <option value="2">2 — не понравилось</option>
+              <option value="1">1 — плохо</option>
+            </select></p>
+          <p><label for="review-text">Текст отзыва</label>
+            <textarea id="review-text" name="review" rows="5" minlength="10" maxlength="1000" required></textarea></p>
+          <p><button type="submit">Отправить отзыв</button></p>
+        </form>
+        <p><small>В ЛР №1 отзыв проверяется браузером, но ещё не сохраняется. Это будет реализовано на следующих этапах.</small></p>
+      </section>
+    </section>
+    <aside aria-labelledby="similar-title">
+      <h2 id="similar-title">Похожие книги</h2>
+      <ul>
+        <li><a href="index.html">Преступление и наказание — Фёдор Достоевский</a></li>
+        <li><a href="index.html">1984 — Джордж Оруэлл</a></li>
+      </ul>
+    </aside>
+  </main>
+  <footer>
+    <p><small>© 2026 BookNest. Учебный проект книжного клуба университета.</small></p>
+    <p><a href="index.html">Вернуться в каталог</a></p>
+  </footer>
+</body>
+</html>

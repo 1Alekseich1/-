@@ -1,0 +1,43 @@
+{
+  "info": {
+    "name": "BookNest Lab 4 — Open Library",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Поиск книг",
+      "request": {
+        "method": "GET",
+        "url": "https://openlibrary.org/search.json?q=tolstoy&limit=20&page=1"
+      }
+    },
+    {
+      "name": "Поиск с жанром",
+      "request": {
+        "method": "GET",
+        "url": "https://openlibrary.org/search.json?q=subject%3Afantasy&limit=20&page=1"
+      }
+    },
+    {
+      "name": "Карточка книги",
+      "request": {
+        "method": "GET",
+        "url": "https://openlibrary.org/works/OL45804W.json"
+      }
+    },
+    {
+      "name": "Издания книги",
+      "request": {
+        "method": "GET",
+        "url": "https://openlibrary.org/works/OL45804W/editions.json?limit=1"
+      }
+    },
+    {
+      "name": "Проверка 404",
+      "request": {
+        "method": "GET",
+        "url": "https://openlibrary.org/works/OL9999999999W.json"
+      }
+    }
+  ]
+}

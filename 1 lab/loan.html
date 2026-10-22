@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="BookNest — книжный клуб университета: каталог, информация о книгах и заявки на выдачу.">
+  <title>Заявка на выдачу — BookNest</title>
+</head>
+<body>
+  <a href="#main">Перейти к основному содержимому</a>
+  <header>
+    <p><strong>BookNest</strong> — книжный клуб университета</p>
+    <nav aria-label="Основная навигация">
+      <ul>
+        <li><a href="index.html">Каталог книг</a></li>
+        <li><a href="book.html">Карточка книги</a></li>
+        <li><a href="loan.html">Заявка на выдачу</a></li>
+      </ul>
+    </nav>
+  </header>
+  <main id="main">
+    <nav aria-label="Хлебные крошки">
+      <ol>
+        <li><a href="index.html">Каталог</a></li>
+        <li><a href="book.html">Мастер и Маргарита</a></li>
+        <li aria-current="page">Заявка на выдачу</li>
+      </ol>
+    </nav>
+    <h1>Заявка на выдачу книги</h1>
+    <p>Заполните данные читателя и выберите срок. Поля со звёздочкой обязательны.</p>
+    <form action="loan.html" method="get">
+      <fieldset>
+        <legend>Данные читателя</legend>
+        <p><label for="reader-name">Имя и фамилия *</label>
+          <input type="text" id="reader-name" name="reader_name" minlength="3" maxlength="80" autocomplete="name" required></p>
+        <p><label for="reader-email">Электронная почта *</label>
+          <input type="email" id="reader-email" name="reader_email" autocomplete="email" required></p>
+        <p><label for="student-number">Номер читательского билета *</label>
+          <input type="text" id="student-number" name="student_number" pattern="[0-9]{6}" title="Введите 6 цифр" inputmode="numeric" required></p>
+      </fieldset>
+      <fieldset>
+        <legend>Параметры выдачи</legend>
+        <p><label for="loan-book">Книга *</label>
+          <select id="loan-book" name="book_id" required>
+            <option value="">Выберите книгу</option>
+            <option value="1" selected>Мастер и Маргарита</option>
+            <option value="2">Преступление и наказание</option>
+            <option value="4">Маленький принц</option>
+            <option value="5">Гарри Поттер и философский камень</option>
+            <option value="6">451° по Фаренгейту</option>
+          </select></p>
+        <p><label for="pickup-date">Желаемая дата получения *</label>
+          <input type="date" id="pickup-date" name="pickup_date" min="2026-01-01" required></p>
+        <p><label for="loan-days">Срок выдачи в днях (от 1 до 14) *</label>
+          <input type="number" id="loan-days" name="loan_days" min="1" max="14" value="14" required></p>
+        <p><label for="loan-comment">Комментарий библиотекарю</label>
+          <textarea id="loan-comment" name="comment" rows="4" maxlength="300" placeholder="Например, когда удобно забрать книгу"></textarea></p>
+      </fieldset>
+      <p><input type="checkbox" id="rules" name="rules" value="yes" required>
+        <label for="rules">Я ознакомился(-ась) с правилами выдачи *</label></p>
+      <p><button type="submit">Проверить и отправить заявку</button>
+        <button type="reset">Очистить форму</button></p>
+    </form>
+    <aside aria-labelledby="loan-info-title">
+      <h2 id="loan-info-title">Правила выдачи</h2>
+      <p>Книга выдаётся максимум на 14 дней. Заявка становится действительной после подтверждения библиотекаря.</p>
+      <p><strong>Важно:</strong> на этом этапе форма демонстрационная: браузер проверяет заполнение, но заявка не записывается в базу.</p>
+    </aside>
+  </main>
+  <footer>
+    <p><small>© 2026 BookNest. Учебный проект книжного клуба университета.</small></p>
+    <p><a href="index.html">Вернуться в каталог</a></p>
+  </footer>
+</body>
+</html>
