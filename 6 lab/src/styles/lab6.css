@@ -1,0 +1,10 @@
+.site-header__inner{display:flex;align-items:center;flex-wrap:wrap;gap:var(--space-3);padding:var(--space-3) clamp(1rem,3vw,3rem)}
+.site-header__inner a{color:var(--color-text);text-decoration:none;padding:var(--space-2)}
+.site-header__inner a[aria-current=page],.site-header__inner a.active{color:var(--color-primary);text-decoration:underline;font-weight:700}
+.content-page{width:min(100%,55rem);margin-inline:auto;padding:var(--space-5);min-width:0}
+.book-form{display:grid;gap:var(--space-4)}.form-field{display:grid;gap:var(--space-2)}
+.form-field input,.form-field select,.form-field textarea{width:100%;max-width:100%}
+.form-field small{color:var(--color-error);font-weight:600}
+.saved-list{display:grid;gap:var(--space-3)}.saved-list li{display:flex;align-items:center;flex-wrap:wrap;gap:var(--space-3)}
+:root[data-theme=dark]{color-scheme:dark;--color-background:#121b29;--color-surface:#1c2939;--color-surface-muted:#25364a;--color-text:#f2f5fb;--color-primary:#a8c9ff;--color-on-primary:#101b2c;--color-primary-hover:#c3dbff;--color-border:#596b7c;--color-header:#1c2939}
+:root[data-theme=light]{color-scheme:light}

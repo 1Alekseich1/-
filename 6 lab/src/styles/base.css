@@ -1,0 +1,19 @@
+/* Общие базовые стили для всех трёх HTML-страниц. */
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { margin: var(--space-0); font-family: var(--font-family); font-size: var(--font-size-base); line-height: var(--line-height); color: var(--color-text); background: var(--color-background); }
+a { color: var(--color-primary); text-underline-offset: var(--space-1); }
+a:hover { color: var(--color-primary-hover); }
+h1, h2, h3, p, figure, dl { margin: var(--space-0); }
+h1 { font-size: var(--font-size-h1); line-height: var(--line-height-heading); }
+h2 { font-size: var(--font-size-h2); line-height: var(--line-height-heading); }
+h3 { font-size: var(--font-size-lg); line-height: var(--line-height-heading); }
+img { max-width: 100%; height: auto; display: block; }
+button, input, select, textarea { font: inherit; }
+button, input[type="submit"] { cursor: pointer; }
+:where(a, button, input, select, textarea):focus-visible { outline: var(--border-focus) solid var(--color-focus); outline-offset: var(--space-1); }
+:where(button, input, select, textarea):disabled { opacity: .55; cursor: not-allowed; }
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation-duration: 0s; transition-duration: 0s; }
+}

@@ -1,0 +1,67 @@
+/* ЛР 2. Все цвета, размеры, интервалы и эффекты определены здесь. */
+:root {
+  color-scheme: light;
+  --color-background: #f6f4ef;
+  --color-surface: #ffffff;
+  --color-surface-muted: #eeeee8;
+  --color-text: #25332d;
+  --color-muted: #5a6960;
+  --color-primary: #245c48;
+  --color-primary-hover: #174331;
+  --color-on-primary: #ffffff;
+  --color-border: #d6ded6;
+  --color-focus: #a14d18;
+  --color-error: #a52335;
+  --color-header: #e9f0e9;
+  --space-0: 0;
+  --space-1: .25rem;
+  --space-2: .5rem;
+  --space-3: .75rem;
+  --space-4: 1rem;
+  --space-5: 1.5rem;
+  --space-6: 2rem;
+  --space-7: 3rem;
+  --radius-sm: .4rem;
+  --radius-md: .8rem;
+  --radius-lg: 1.3rem;
+  --radius-pill: 999rem;
+  --font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-size-base: 1rem;
+  --font-size-sm: .875rem;
+  --font-size-lg: 1.15rem;
+  --font-size-h1: clamp(2rem, 5vw, 3.4rem);
+  --font-size-h2: clamp(1.35rem, 3vw, 1.8rem);
+  --line-height: 1.6;
+  --line-height-heading: 1.2;
+  --shadow-card: 0 .3rem 1.4rem rgb(17 45 29 / 8%);
+  --shadow-hover: 0 .6rem 2rem rgb(17 45 29 / 16%);
+  --border-width: 1px;
+  --border-focus: 3px;
+  --max-content: 84rem;
+  --grid-card-min: 19rem;
+  --grid-sidebar: 17rem;
+  --cover-width: 11.25rem;
+  --image-detail-max: 15rem;
+  --transition-duration: .2s;
+  --button-min-height: 2.8rem;
+}
+/* Меняем только переменные: компоненты используют их автоматически. */
+@media (prefers-color-scheme: dark) {
+  :root {
+    color-scheme: dark;
+    --color-background: #151d1b;
+    --color-surface: #22302a;
+    --color-surface-muted: #2e4036;
+    --color-text: #f1f5ef;
+    --color-muted: #c2d2c8;
+    --color-primary: #97d8ae;
+    --color-primary-hover: #c2efd0;
+    --color-on-primary: #102318;
+    --color-border: #53645b;
+    --color-focus: #ffca7a;
+    --color-error: #ff9eae;
+    --color-header: #253b30;
+    --shadow-card: 0 .3rem 1.4rem rgb(0 0 0 / 18%);
+    --shadow-hover: 0 .6rem 2rem rgb(0 0 0 / 28%);
+  }
+}

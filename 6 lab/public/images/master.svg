@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="180" height="250" viewBox="0 0 180 250" role="img" aria-label="Обложка книги Мастер и Маргарита">
+<rect width="180" height="250" fill="#433c67"/>
+<rect x="12" y="12" width="156" height="226" fill="none" stroke="#f3e5c8" stroke-width="2"/>
+<circle cx="90" cy="90" r="36" fill="#d4b885" opacity=".7"/>
+<path d="M27 165 Q90 130 153 165 L153 178 Q90 145 27 178 Z" fill="#f3e5c8"/>
+<text x="90" y="204" text-anchor="middle" font-size="14" fill="white" font-family="serif">BookNest</text>
+<text x="90" y="224" text-anchor="middle" font-size="11" fill="white" font-family="serif">1967</text>
+</svg>
